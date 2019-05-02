@@ -1,6 +1,12 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const Razorpay = require('razorpay');
+
+const rzp = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET
+});
 
 const app = express();
 app.use(express.json());
@@ -23,7 +29,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/purchase', (req, res) => {
-  console.log(req.body);
+  const { razorpay_payment_id } = req.body;
+  rzp.payments.capture(razorpay_payment_id, 50000);
   res.send('Success');
 });
 
