@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 app.post('/purchase', (req, res) => {
   const { razorpay_payment_id } = req.body;
   rzp.payments.capture(razorpay_payment_id, 50000);
-  res.send('Success');
+  res.render('success');
 });
 
 const port = process.env.PORT || 5000;
